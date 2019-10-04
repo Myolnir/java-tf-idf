@@ -4,14 +4,14 @@ import com.myolnir.model.TdIdfFile;
 
 import java.io.File;
 import java.nio.file.*;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 public class TdIdf {
+
+    private static TdIdfFilesProcessor processor = TdIdfFilesProcessor.getInstance();
 
     public static void main(String[] args) throws IOException,
             InterruptedException {
@@ -30,7 +30,7 @@ public class TdIdf {
         WatchService watchService = FileSystems.getDefault().newWatchService();
         folder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
-        boolean valid = true;
+        boolean valid;
         processFiles(directory, terms, Integer.parseInt(count));
         do {
             WatchKey watchKey = watchService.take();
@@ -52,41 +52,20 @@ public class TdIdf {
     /**
      * Retrieves every txt files on the first level of the given directory, for each gets its content and make
      * a call to TD-IDF calculator and prints the result.
-     * @param directory
-     * @param terms
+     * @param directory directory to process
+     * @param terms list of words to use in TD-IDF algorithm
      * @throws IOException
      */
     private static void processFiles (String directory, String terms, int resultsToShow) throws IOException{
-        List<File> filesInFolder = Files.list(Paths.get(directory))
-                .filter(file -> file.getFileName().toString().endsWith(".txt"))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-
-        List<TdIdfFile> documents = new ArrayList<>();
-        TdIfCalculator calculator = new TdIfCalculator();
-        for (File file : filesInFolder) {
-            try {
-                List<String> lines = new ArrayList<>(Files.readAllLines(Paths.get(file.getAbsolutePath())));
-                documents.add(new TdIdfFile(lines, file.getName()));
-            }
-            catch (IOException e) {
-                System.out.println("File not exists");
-            }
-        }
-
-        List<TdIdfFile> result = new ArrayList<>();
-        for (TdIdfFile document : documents) {
-            double tfidf = calculator.tfIdf(document.getFileContent(), documents, terms);
-            result.add(new TdIdfFile(document.getFileContent(), document.getFileName(), tfidf));
-        }
+        List<File> filesInFolder = processor.retrieveFilesIntoFolder(directory);
+        List<TdIdfFile> documents = processor.readFileAndExtractItsInfo(filesInFolder);
+        List<TdIdfFile> result = processor.processTdIdfAlgorithm(documents, terms);
         result
             .stream()
             .sorted(Comparator.comparing(TdIdfFile::getIdf).reversed())
             .limit(resultsToShow)
             .forEach((element) -> System.out.println("TD-IDF for " + element.getFileName() + " is " + element.getIdf()));
     }
-
 
 
 }
