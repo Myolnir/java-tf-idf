@@ -2,6 +2,8 @@
 
 Given a directory, a "word" and a word it implements the TD-IDF algorithm for this files and word.
 
+## Input params
+
 The input for this service will be:
 
 <table>
@@ -32,17 +34,12 @@ The complexity of the solution is O(n^2) because to calculate idf part we have t
 
 ## Installation
 
-The class is situated on the package com.myolnir so to compile you execute
+1. Download/Clone this repository.
+2. Import the downloaded Java Project into some IDE (e.g., IntelliJ, Eclipse, etc.)
+3. Run the [TfIdf.java](src/com/myolnir/TfIdf.java) file for Palindrome Logic.
+4. Run the [TfIdfCalculatorTest.java](test/com/myolnir/TfIdfCalculatorTest.java) file for JUnit Test Cases.
 
-`javac -d <where do you want to put the class files>/TdIdf.java`
-
-
-After a couple of seconds you will have a TdIdf.class in the route you put on the above command.
-
-To execute this class you should run:
-
-`java com.myolnir.TdIdf`
-
-The program should run and ask you for a string, after you enter the script the program returns if
-the given string is a palindrome or not.
+If you run the program itself the command line should ask you for several strings (check input params section), 
+after you enter all params the program returns the TF_IDF algorithm result for this input and stays waiting for new
+files in the entered directory, each time you add a new file the algorithm will runs again and returns the result.
 

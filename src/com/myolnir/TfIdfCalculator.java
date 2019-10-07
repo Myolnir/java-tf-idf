@@ -1,12 +1,12 @@
 package com.myolnir;
 
-import com.myolnir.model.TdIdfFile;
+import com.myolnir.model.TfIdfFile;
 
 import java.util.List;
 
-public class TdIfCalculator {
+class TfIdfCalculator {
 
-    public double tfIdf(List<String> doc, List<TdIdfFile> docs, String term) {
+    double tfIdf(List<String> doc, List<TfIdfFile> docs, String term) {
         return tf(doc, term) * idf(docs, term);
     }
 
@@ -19,9 +19,9 @@ public class TdIfCalculator {
         return result / doc.size();
     }
 
-    private double idf(List<TdIdfFile> docs, String term) {
+    private double idf(List<TfIdfFile> docs, String term) {
         double n = 0;
-        for (TdIdfFile doc : docs) {
+        for (TfIdfFile doc : docs) {
             for (String word : doc.getFileContent()) {
                 if (term.equalsIgnoreCase(word)) {
                     n++;
@@ -29,7 +29,7 @@ public class TdIfCalculator {
                 }
             }
         }
-        return Math.log(docs.size() / n);
+        return Math.log((double)docs.size()/n);
     }
 
 }

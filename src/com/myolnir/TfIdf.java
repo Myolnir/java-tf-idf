@@ -1,6 +1,6 @@
 package com.myolnir;
 
-import com.myolnir.model.TdIdfFile;
+import com.myolnir.model.TfIdfFile;
 
 import java.io.File;
 import java.nio.file.*;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
-public class TdIdf {
+public class TfIdf {
 
-    private static TdIdfFilesProcessor processor = TdIdfFilesProcessor.getInstance();
+    private static TfIdfFilesProcessor processor = TfIdfFilesProcessor.getInstance();
 
     public static void main(String[] args) throws IOException,
             InterruptedException {
@@ -56,15 +56,16 @@ public class TdIdf {
      * @param terms list of words to use in TD-IDF algorithm
      * @throws IOException
      */
-    private static void processFiles (String directory, String terms, int resultsToShow) throws IOException{
+    private static List<TfIdfFile> processFiles (String directory, String terms, int resultsToShow) throws IOException{
         List<File> filesInFolder = processor.retrieveFilesIntoFolder(directory);
-        List<TdIdfFile> documents = processor.readFileAndExtractItsInfo(filesInFolder);
-        List<TdIdfFile> result = processor.processTdIdfAlgorithm(documents, terms);
+        List<TfIdfFile> documents = processor.readFileAndExtractItsInfo(filesInFolder);
+        List<TfIdfFile> result = processor.processTdIdfAlgorithm(documents, terms);
         result
             .stream()
-            .sorted(Comparator.comparing(TdIdfFile::getIdf).reversed())
+            .sorted(Comparator.comparing(TfIdfFile::getIdf).reversed())
             .limit(resultsToShow)
             .forEach((element) -> System.out.println("TD-IDF for " + element.getFileName() + " is " + element.getIdf()));
+        return result;
     }
 
 

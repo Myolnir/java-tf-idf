@@ -2,17 +2,17 @@ package com.myolnir.model;
 
 import java.util.List;
 
-public class TdIdfFile implements Comparable<TdIdfFile>{
+public class TfIdfFile implements Comparable<TfIdfFile>{
     private List<String> fileContent;
     private String fileName;
     private Double idf;
 
-    public TdIdfFile(List<String> fileContent, String fileName) {
+    public TfIdfFile(List<String> fileContent, String fileName) {
         this.fileContent = fileContent;
         this.fileName = fileName;
     }
 
-    public TdIdfFile(List<String> fileContent, String fileName, double idf) {
+    public TfIdfFile(List<String> fileContent, String fileName, double idf) {
         this.fileContent = fileContent;
         this.fileName = fileName;
         this.idf = idf;
@@ -31,7 +31,7 @@ public class TdIdfFile implements Comparable<TdIdfFile>{
     }
 
     @Override
-    public int compareTo(TdIdfFile file) {
+    public int compareTo(TfIdfFile file) {
         return getIdf().compareTo(file.getIdf());
     }
 

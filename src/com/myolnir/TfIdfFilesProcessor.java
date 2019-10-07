@@ -1,6 +1,6 @@
 package com.myolnir;
 
-import com.myolnir.model.TdIdfFile;
+import com.myolnir.model.TfIdfFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class TdIdfFilesProcessor {
+class TfIdfFilesProcessor {
 
-    private static TdIdfFilesProcessor instance;
+    private static TfIdfFilesProcessor instance;
 
-    private TdIdfFilesProcessor(){}
+    private TfIdfFilesProcessor(){}
 
-    static synchronized TdIdfFilesProcessor getInstance(){
+    static synchronized TfIdfFilesProcessor getInstance(){
         if(instance == null){
-            instance = new TdIdfFilesProcessor();
+            instance = new TfIdfFilesProcessor();
         }
         return instance;
     }
@@ -28,14 +28,14 @@ class TdIdfFilesProcessor {
      * Receives a list of files and for each read it, extract its content to a List and return a List of files to be
      * processed
      * @param filesInFolder Files to read
-     * @return List of TdIdfFile with file content.
+     * @return List of TfIdfFile with file content.
      */
-    List<TdIdfFile> readFileAndExtractItsInfo(List<File> filesInFolder) {
-        List<TdIdfFile> documents = new ArrayList<>();
+    List<TfIdfFile> readFileAndExtractItsInfo(List<File> filesInFolder) {
+        List<TfIdfFile> documents = new ArrayList<>();
         for (File file : filesInFolder) {
             try {
                 List<String> lines = new ArrayList<>(Files.readAllLines(Paths.get(file.getAbsolutePath())));
-                documents.add(new TdIdfFile(lines, file.getName()));
+                documents.add(new TfIdfFile(lines, file.getName()));
             }
             catch (IOException e) {
                 System.out.println("File not exists");
@@ -58,12 +58,12 @@ class TdIdfFilesProcessor {
                 .collect(Collectors.toList());
     }
 
-    List<TdIdfFile> processTdIdfAlgorithm(List<TdIdfFile> documents, String terms) {
-        TdIfCalculator calculator = new TdIfCalculator();
-        List<TdIdfFile> result = new ArrayList<>();
-        for (TdIdfFile document : documents) {
+    List<TfIdfFile> processTdIdfAlgorithm(List<TfIdfFile> documents, String terms) {
+        TfIdfCalculator calculator = new TfIdfCalculator();
+        List<TfIdfFile> result = new ArrayList<>();
+        for (TfIdfFile document : documents) {
             double tfidf = calculator.tfIdf(document.getFileContent(), documents, terms);
-            result.add(new TdIdfFile(document.getFileContent(), document.getFileName(), tfidf));
+            result.add(new TfIdfFile(document.getFileContent(), document.getFileName(), tfidf));
         }
         return result;
     }
