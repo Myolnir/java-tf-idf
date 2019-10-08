@@ -2,12 +2,16 @@ package com.myolnir;
 
 import com.myolnir.model.TfIdfFile;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 class TfIdfCalculator {
 
     double tfIdf(List<String> doc, List<TfIdfFile> docs, String term) {
-        return tf(doc, term) * idf(docs, term);
+        BigDecimal bd = BigDecimal.valueOf(tf(doc, term) * idf(docs, term));
+        bd = bd.round(MathContext.DECIMAL32);
+        return bd.doubleValue();
     }
 
     private double tf(List<String> doc, String term) {

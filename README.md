@@ -20,17 +20,19 @@ The input for this service will be:
     </tr><tr>
     <td>count</td><td><code>String</code></td><td><p>Number of results we want to show</td>
     </tr><tr>
+    <td>period</td><td><code>String</code></td><td><p>Period of time (in seconds) to check the directory and run the algorithm</td>
+    </tr><tr>
 </table>
 
 As prerequisite the service only checks files with ".txt" extension.
 
-The service is always running unless that there are an error and every time a new txt file is created in the given
-directory it will execute again the algorithm and recalculate the results.
+The service is always running unless there are an error and every number of seconds indicated on the *period* parameter
+the directory will be checked again and the algorithm re-executed and recalculate the results.
 
-We also sort the results by td-idf value from higher to lower and only shows the "n" results that we input on the count
+We also sort the results by td-idf value from higher to lower and only shows the number of results that we input on the *count*
 parameter.
 
-The complexity of the solution is O(n^2) because to calculate idf part we have to chained loops.
+The complexity of the solution is O(n^2) because to calculate idf part we have two chained loops.
 
 ## Installation
 
@@ -39,7 +41,7 @@ The complexity of the solution is O(n^2) because to calculate idf part we have t
 3. Run the [TfIdf.java](src/com/myolnir/TfIdf.java) file for Palindrome Logic.
 4. Run the [TfIdfCalculatorTest.java](test/com/myolnir/TfIdfCalculatorTest.java) file for JUnit Test Cases.
 
-If you run the program itself the command line should ask you for several strings (check input params section), 
-after you enter all params the program returns the TF_IDF algorithm result for this input and stays waiting for new
-files in the entered directory, each time you add a new file the algorithm will runs again and returns the result.
+When you run the program the command line should ask you for several strings (check input params section), 
+after you enter all params the program returns the TF_IDF algorithm result for this input and after that it recalculates
+after the number of seconds you entered on *period* parameter.
 
