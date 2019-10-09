@@ -3,7 +3,6 @@ package com.myolnir;
 import com.myolnir.model.TfIdfFile;
 
 import java.io.File;
-import java.nio.file.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;

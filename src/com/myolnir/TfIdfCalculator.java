@@ -33,7 +33,7 @@ class TfIdfCalculator {
                 }
             }
         }
-        return Math.log((double)docs.size()/n);
+        return n != 0.0 ? Math.log((double)docs.size()/n) : 0.0;
     }
 
 }

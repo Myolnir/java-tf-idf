@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static jdk.nashorn.internal.objects.Global.NaN;
 import static org.junit.Assert.assertEquals;
 
 public class TfIdfCalculatorTest {
@@ -27,13 +26,13 @@ public class TfIdfCalculatorTest {
     @Test
     public void correctFileWithOccurrenciesTest() {
         double result = calculator.tfIdf(fileWithOccurences, Arrays.asList(occurences, noOccurences), termToSearch);
-        assertEquals(0.4158f, result, 0.0002); // true
+        assertEquals(0.4158f, result, 0.0002);
     }
 
     @Test
     public void correctFileWithNoOccurrenciesTest() {
         double result = calculator.tfIdf(fileWithoutOccurences, Arrays.asList(noOccurences), termToSearch);
-        assertEquals(NaN, result, 0.0002); // true
+        assertEquals(0.0, result, 0.0002);
     }
 
 
