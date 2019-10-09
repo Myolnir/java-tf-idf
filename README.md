@@ -24,7 +24,7 @@ The input for this service will be:
     </tr><tr>
 </table>
 
-As prerequisite the service only checks files with ".txt" extension.
+As prerequisite the service only checks files with ".txt" extension and I only check the first level of the given directory.
 
 The service is always running unless there are an error and every number of seconds indicated on the *period* parameter
 the directory will be checked again and the algorithm re-executed and recalculate the results.
